@@ -260,7 +260,8 @@ another ROM's entry points) is used wherever that address appears, and a
 register name (FF00H-FFFFH) wherever that address is data. Generated names
 come last. Immediate values stay numbers unless you name them.
 
-`sfr/uPD78312A.inc` holds the confirmed µPD78312A register names and is
+`sfr/uPD78312A.inc` holds every µPD78312A register name in the data
+sheet's SFR table (Table 4-2), with bit notes from the user's manual, and is
 loaded automatically. Other include files come from `-i FILE` or an
 `.include` line; they are found next to the database or listing, in the
 current directory, or in `sfr/`, and the listing names them without a path.
