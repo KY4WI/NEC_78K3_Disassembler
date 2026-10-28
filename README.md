@@ -469,30 +469,27 @@ comments:
 ## Assembling the output
 
 The `--source` output, or the listing with its first 22 columns removed,
-assembles with the modified 78K/III backend of
-[KY4WI/vasm](https://github.com/KY4WI/vasm) (std syntax module; build it
-with `make -f Makefile.78k3 CPU=78k3 SYNTAX=std`).
-
-**VASM availability:** The 78K/III backend is currently private, is not part
-of an official vasm release, and contains modifications for which permission
-to redistribute has not yet been obtained. The link may therefore be
-inaccessible. The disassembler, database extraction and annotation workflow
-work without vasm; only reassembly and the corresponding tests require the
-compatible assembler.
+assembles with the NEC 78K/III vasm backend in
+[NEC_78K3_Toolchain](https://github.com/KY4WI/NEC_78K3_Toolchain).
+Build the toolchain with `make` from that repository's root, then use
+`bin/vasm78k3_std`. The backend is distributed separately and is not
+part of an official vasm release. The disassembler and annotation workflow
+work without vasm; only reassembly and the corresponding tests require
+the compatible assembler.
 
 If you have the backend, tell it where the include files are:
 
 ```sh
 ./78k_disasm rom.bin -d rom.inc --source rom.s
-vasm78k3_std -Fbin -I /path/to/NEC_78KIII_Disassembler/sfr -o rebuilt.bin rom.s
+vasm78k3_std -Fbin -I /path/to/NEC_78K3_Disassembler/sfr -o rebuilt.bin rom.s
 cmp rebuilt.bin rom.bin
 ```
 
 The disassembler and the vasm backend each keep their own copy of the
-opcode table (`Opcodes.h` here, `cpus/78k3/shared/Opcodes.h` there). They
+opcode table (`Opcodes.h` here, `vasm/cpus/78k3/shared/Opcodes.h` there). They
 are identical apart from the mnemonic prefix and comments, and a fix to
 one must be carried to the other by hand. After changing vasm's table,
-regenerate `cpus/78k3/mnemonics_gen.c` with `cpus/78k3/regen.sh`.
+regenerate `vasm/cpus/78k3/mnemonics_gen.c` with `vasm/cpus/78k3/regen.sh`.
 
 ## Background
 
